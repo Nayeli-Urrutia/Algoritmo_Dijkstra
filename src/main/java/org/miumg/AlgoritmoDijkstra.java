@@ -8,14 +8,17 @@ import java.util.List;
  * Clase para el algoritmo de Dijkstra
  */
 public class AlgoritmoDijkstra {
-    private final int[] distancias;
+    final int[] distancias;
     private final boolean[] visitados;
     private final int[] predecesores;
     private final int numVertices;
     private final List<String> pasos; // Para guardar los pasos del algoritmo
 
+
     /**
      * Constructor del algoritmo de Dijkstra
+     * Inicializa las estructuras de datos necesarias para el algoritmo
+     * Se modificó para manejar los 22 departamentos de Guatemala como vértices
      * @param grafo grafo sobre el que se aplicará el algoritmo
      */
     public AlgoritmoDijkstra(Grafo grafo) {
@@ -25,12 +28,13 @@ public class AlgoritmoDijkstra {
         predecesores = new int[numVertices];
         pasos = new ArrayList<>();
     }
-
     /**
      * Método para encontrar el camino más corto desde un vértice de origen a todos los demás
+     * Se adaptó para calcular las rutas entre los departamentos de Guatemala
+     * Cada vértice representa un departamento y las aristas representan las conexiones directas entre ellos
      * @param grafo grafo sobre el que se aplicará el algoritmo
-     * @param origen vértice de origen
-     * @return arreglo con las distancias mínimas
+     * @param origen vértice de origen (departamento inicial)
+     * @return arreglo con las distancias mínimas a cada departamento
      */
     public int[] encontrarCaminosMinimos(Grafo grafo, int origen) {
         // Inicialización
@@ -91,7 +95,8 @@ public class AlgoritmoDijkstra {
 
     /**
      * Método para obtener el vértice no visitado con la distancia mínima
-     * @return vértice con la distancia mínima
+     * Busca entre los departamentos no visitados aquel que tenga la menor distancia acumulada
+     * @return índice del departamento no visitado con menor distancia, -1 si no hay departamentos alcanzables
      */
     private int obtenerVerticeNoVisitadoConDistanciaMinima() {
         int minDistancia = Integer.MAX_VALUE;
@@ -107,10 +112,13 @@ public class AlgoritmoDijkstra {
         return verticeMinimo;
     }
 
+
     /**
      * Método para obtener la ruta desde el origen hasta un destino
-     * @param destino vértice de destino
-     * @return lista con la ruta
+     * Reconstruye el camino desde el departamento de origen hasta el destino
+     * utilizando el array de predecesores
+     * @param destino índice del departamento destino
+     * @return lista con la secuencia de departamentos que forman la ruta más corta
      */
     public List<Integer> obtenerRuta(int destino) {
         List<Integer> ruta = new ArrayList<>();
